@@ -78,63 +78,48 @@ Was there a match (y/n)?""")
         print("Canceld")
 
 # 挿入する型を入力してください
-while True:
-
-    print(r"""
+print(r"""
 Enter the insertion parameter type.
 Example: file-modified-day""")
 
-    typeStr = input()
+typeStr = input()
 
-    print(f"""
+print(f"""
 Parameter type
 --------------
-{typeStr}
+{typeStr}""")
 
-Parameter value
----------------""")
 
+def get_center(typeStr, file):
     if typeStr == "file-creation-year":
         tick = os.path.getctime(file)
-        center = datetime.fromtimestamp(tick).strftime('%Y')
+        return datetime.fromtimestamp(tick).strftime('%Y')
 
     elif typeStr == "file-creation-month":
         tick = os.path.getctime(file)
-        center = datetime.fromtimestamp(tick).strftime('%m')
+        return datetime.fromtimestamp(tick).strftime('%m')
 
     elif typeStr == "file-creation-day":
         tick = os.path.getctime(file)
-        center = datetime.fromtimestamp(tick).strftime('%d')
+        return datetime.fromtimestamp(tick).strftime('%d')
 
     elif typeStr == "file-modified-year":
         tick = os.path.getmtime(file)
-        center = datetime.fromtimestamp(tick).strftime('%Y')
+        return datetime.fromtimestamp(tick).strftime('%Y')
 
     elif typeStr == "file-modified-month":
         tick = os.path.getmtime(file)
-        center = datetime.fromtimestamp(tick).strftime('%m')
+        return datetime.fromtimestamp(tick).strftime('%m')
 
     elif typeStr == "file-modified-day":
         tick = os.path.getmtime(file)
-        center = datetime.fromtimestamp(tick).strftime('%d')
+        return datetime.fromtimestamp(tick).strftime('%d')
 
     elif typeStr == "digit":
-        center = "#digit#"
+        return "#digit#"
 
     else:
-        center = "#type-failed#"
-
-    print(f"{center}")
-
-    print("""
-Ok (y/n)?""")
-
-    answer = input()
-
-    if answer == "y":
-        break
-    else:
-        print("Canceld")
+        return "#type-failed#"
 
 
 # 置換のシミュレーション
@@ -145,10 +130,12 @@ Simulation
 countOfSimulation = 0
 
 for i, file in enumerate(files):
+    center = get_center(typeStr, file)
     basename = os.path.basename(file)
     result = pattern.match(basename)
     if result:
         # Matched
+
         # グループ数は２
         groupCount = len(result.groups())
         buf = f"({i+1}) {basename}"
@@ -185,6 +172,7 @@ Result
 
 # 置換実行
 for i, file in enumerate(files):
+    center = get_center(typeStr, file)
     basename = os.path.basename(file)
     result = pattern.match(basename)
     if result:
@@ -194,7 +182,6 @@ for i, file in enumerate(files):
         right = result.group(2)
         replaced = f"{left}{center}{right}"
 
-        converted = re.sub(patternText, replaced, basename)
         oldPath = os.path.join(os.getcwd(), basename)
         newPath = os.path.join(os.getcwd(), replaced)
         print(f"({i})Rename {oldPath} --> {newPath}")
