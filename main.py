@@ -89,6 +89,18 @@ Parameter type
 --------------
 {typeStr}""")
 
+# 文字列フォーマットを入力してください
+print("""
+Enter the string format.
+Example: {0}{2}{1}""")
+
+formatStr = input()
+
+print(f"""
+Format string
+-------------
+{formatStr}""")
+
 
 def get_center(typeStr, file):
     if typeStr == "file-creation-year":
@@ -143,7 +155,7 @@ for i, file in enumerate(files):
 
         left = result.group(1)
         right = result.group(2)
-        replaced = f"{left}{center}{right}"
+        replaced = formatStr.format(left, right, center)
 
         print(f"({i+1}) {basename} --> {replaced}")
         countOfSimulation += 1
@@ -180,7 +192,7 @@ for i, file in enumerate(files):
 
         left = result.group(1)
         right = result.group(2)
-        replaced = f"{left}{center}{right}"
+        replaced = formatStr.format(left, right, center)
 
         oldPath = os.path.join(os.getcwd(), basename)
         newPath = os.path.join(os.getcwd(), replaced)

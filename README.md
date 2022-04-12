@@ -24,11 +24,17 @@ python main.py > foo.log
 これを以下のように変形したい。  
 
 ```plaintext
-201409__shogi-sdt2__01suji115-120.png
+201409__shogi-sdt2__01-suji115-120.png
 ```
 
 ならば正規表現は以下のようにする。  
 
 ```plaintext
 ^(201409__shogi-sdt2__)([^\.]*.png)$
+```
+
+文字列フォーマットは以下のようにする。  
+
+```plaintext
+{0}{2}-{1}
 ```
