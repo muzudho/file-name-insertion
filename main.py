@@ -42,7 +42,7 @@ Are you sure this is the right directory (y/n)?""")
 while True:
     print(r"""
 Please enter a regular expression pattern. Left and Rignt groups. Insert to center.
-Example: ^(example-)(?:.*)(-banana.png)$""")
+Example: ^(example-)(?:.*)(-banana.txt)$""")
 
     patternText = input()
     pattern = re.compile(patternText)
@@ -77,12 +77,65 @@ Was there a match (y/n)?""")
     else:
         print("Canceld")
 
-# 挿入する型
-print(r"""
+# 挿入する型を入力してください
+while True:
+
+    print(r"""
 Enter the insertion parameter type.
 Example: file-modified-day""")
 
-parameterType = input()
+    typeStr = input()
+
+    print(f"""
+Parameter type
+--------------
+{typeStr}
+
+Parameter value
+---------------""")
+
+    if typeStr == "file-creation-year":
+        tick = os.path.getctime(file)
+        center = datetime.fromtimestamp(tick).strftime('%Y')
+
+    elif typeStr == "file-creation-month":
+        tick = os.path.getctime(file)
+        center = datetime.fromtimestamp(tick).strftime('%m')
+
+    elif typeStr == "file-creation-day":
+        tick = os.path.getctime(file)
+        center = datetime.fromtimestamp(tick).strftime('%d')
+
+    elif typeStr == "file-modified-year":
+        tick = os.path.getmtime(file)
+        center = datetime.fromtimestamp(tick).strftime('%Y')
+
+    elif typeStr == "file-modified-month":
+        tick = os.path.getmtime(file)
+        center = datetime.fromtimestamp(tick).strftime('%m')
+
+    elif typeStr == "file-modified-day":
+        tick = os.path.getmtime(file)
+        center = datetime.fromtimestamp(tick).strftime('%d')
+
+    elif typeStr == "digit":
+        center = "#digit#"
+
+    else:
+        center = "#type-failed#"
+
+    print(f"{center}")
+
+    print("""
+Ok (y/n)?""")
+
+    answer = input()
+
+    if answer == "y":
+        break
+    else:
+        print("Canceld")
+
 
 # 置換のシミュレーション
 print("""
@@ -100,66 +153,18 @@ for i, file in enumerate(files):
         groupCount = len(result.groups())
         buf = f"({i+1}) {basename}"
         isUnmatched = False
-        for j in range(0, groupCount):
 
-            value = result.group(j+1)
-            typeStr = typeTable[f"{j+1}"]
+        left = result.group(1)
+        right = result.group(2)
 
-            if typeStr == "file-creation-year":
-                tick = os.path.getctime(file)
-                expected = datetime.fromtimestamp(tick).strftime('%Y')
-                # print(f"file={file} value={value} year={expected}")
-                if value != expected:
-                    isUnmatched = True
-
-            elif typeStr == "file-creation-month":
-                tick = os.path.getctime(file)
-                expected = datetime.fromtimestamp(tick).strftime('%m')
-                # print(f"file={file} value={value} month={expected}")
-                if value != expected:
-                    isUnmatched = True
-
-            elif typeStr == "file-creation-day":
-                tick = os.path.getctime(file)
-                expected = datetime.fromtimestamp(tick).strftime('%d')
-                # print(f"file={file} value={value} day={expected}")
-                if value != expected:
-                    isUnmatched = True
-
-            elif typeStr == "file-modified-year":
-                tick = os.path.getmtime(file)
-                expected = datetime.fromtimestamp(tick).strftime('%Y')
-                if value != expected:
-                    isUnmatched = True
-
-            elif typeStr == "file-modified-month":
-                tick = os.path.getmtime(file)
-                expected = datetime.fromtimestamp(tick).strftime('%m')
-                if value != expected:
-                    isUnmatched = True
-
-            elif typeStr == "file-modified-day":
-                tick = os.path.getmtime(file)
-                expected = datetime.fromtimestamp(tick).strftime('%d')
-                if value != expected:
-                    isUnmatched = True
-
-            elif typeStr == "digit":
-                expected = "#digit#"
-                if not value.isdigit():
-                    isUnmatched = True
-
-            else:
-                expected = "#type-failed#"
-
-            buf += f" \\{j+1}=[{value}][{expected}]"
-
-        if isUnmatched:
-            print(buf)
-            countOfSimulation += 1
-    else:
-        # Unmatched
-        print(f"({i+1}) {basename}")
+        print(f"({i+1})Rename {basename} --> {left}{center}{right}")
         countOfSimulation += 1
 
-print(f"Count of simulation = {countOfSimulation}")
+    else:
+        # Unmatched
+        pass
+
+print(f"""
+Count of simulation = {countOfSimulation}""")
+
+print(f"WIP")
