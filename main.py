@@ -156,8 +156,9 @@ for i, file in enumerate(files):
 
         left = result.group(1)
         right = result.group(2)
+        replaced = f"{left}{center}{right}"
 
-        print(f"({i+1})Rename {basename} --> {left}{center}{right}")
+        print(f"({i+1}) {basename} --> {replaced}")
         countOfSimulation += 1
 
     else:
@@ -167,4 +168,34 @@ for i, file in enumerate(files):
 print(f"""
 Count of simulation = {countOfSimulation}""")
 
-print(f"WIP")
+print("""
+Do you want to run it (y/n)?""")
+
+answer = input()
+
+if answer == "y":
+    pass
+else:
+    print("Canceld")
+    exit()
+
+print("""
+Result
+------""")
+
+# 置換実行
+for i, file in enumerate(files):
+    basename = os.path.basename(file)
+    result = pattern.match(basename)
+    if result:
+        # Matched
+
+        left = result.group(1)
+        right = result.group(2)
+        replaced = f"{left}{center}{right}"
+
+        converted = re.sub(patternText, replaced, basename)
+        oldPath = os.path.join(os.getcwd(), basename)
+        newPath = os.path.join(os.getcwd(), replaced)
+        print(f"({i})Rename {oldPath} --> {newPath}")
+        os.rename(oldPath, newPath)
