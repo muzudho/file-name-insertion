@@ -130,4 +130,4 @@ Result
 
 def input_y(prompt_message):
     """はい？"""
-    return input(prompt_message).upper == "Y"
+    return input(prompt_message).upper() == "Y"
