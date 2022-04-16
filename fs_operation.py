@@ -2,22 +2,21 @@
 
 import os
 import glob
-import re
 
 
-def input_directory():
-    """どのディレクトリーですか？"""
-    print("""Which directory?
-Example: .""")
+def input_change_current_directory(prompt_message):
+    """カレント ディレクトリーを替えます"""
+    print(prompt_message)
 
     path = input()
 
     # カレントディレクトリを移動
     os.chdir(path)
 
-    # フィル名を一覧します
-    print(f"""Current directory: {os.getcwd()}
 
+def list_current_directory_files():
+    """カレント ディレクトリーのファイルを一覧します"""
+    print(f"""
 Files
 -----""")
 

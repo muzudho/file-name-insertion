@@ -1,5 +1,7 @@
+import os
 import sys
-from fs_operation import input_directory, input_is_right_directory, input_y, \
+from fs_operation import input_change_current_directory, list_current_directory_files, \
+    input_is_right_directory, input_y, \
     list_name_matched_files
 from this_operation import input_re_pattern, simulate_replace, replace_file_names, \
     input_type_str, input_string_format, input_y
@@ -11,7 +13,13 @@ sys.stdout.reconfigure(encoding='utf-8')
 # ディレクトリー選択
 while True:
     # どのディレクトリーですか？
-    files = input_directory()
+    input_change_current_directory("""Which directory?
+Example: .""")
+
+    print(f"Current directory: {os.getcwd()}")
+
+    # カレント ディレクトリーのファイルを一覧します
+    files = list_current_directory_files()
 
     # このディレクトリーで合っていますか？
     is_right_directory = input_is_right_directory()
