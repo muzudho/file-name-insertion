@@ -8,6 +8,7 @@ from datetime import datetime
 
 
 def input_directory():
+    """どのディレクトリーですか？"""
     print("""Which directory?
 Example: .""")
 
@@ -33,6 +34,7 @@ Files
 
 
 def input_file_name_pattern(files):
+    """ファイル名パターンの入力"""
     print(r"""
 Please enter a regular expression pattern. Left and Rignt groups. Insert to center.
 Example: ^(example-)(?:.*)(-banana.txt)$""")
@@ -45,7 +47,11 @@ Example: ^(example-)(?:.*)(-banana.txt)$""")
 Numbering
 ---------""")
 
-    # とりあえず一覧します
+    return pattern
+
+
+def list_name_matched_files(files, pattern):
+    """パターンに一致したファイル名の一覧"""
     for i, file in enumerate(files):
         basename = os.path.basename(file)
         result = pattern.match(basename)
@@ -60,5 +66,3 @@ Numbering
         else:
             # Unmatched
             print(f"( ) {basename}")
-
-    return pattern

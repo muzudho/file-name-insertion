@@ -1,6 +1,7 @@
 import sys
 from fs_operation import input_directory, input_file_name_pattern
-from this_operation import simulate_replace, replace_file_names
+from this_operation import simulate_replace, replace_file_names, input_type_str, input_string_format, \
+    input_was_there_match, list_name_matched_files, input_do_you_want_to_run_it, input_is_right_directory
 
 # 日本のWindows は "cp932" なので、Unicodeに変換
 sys.stdout.reconfigure(encoding='utf-8')
@@ -8,14 +9,14 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 # ディレクトリーを選んでください
 while True:
+    # どのディレクトリーですか？
     files = input_directory()
 
-    print("""
-Are you sure this is the right directory (y/n)?""")
 
-    answer = input()
+    # このディレクトリーで合っていますか？
+    is_right_directory = input_is_right_directory()
 
-    if answer == "y":
+    if is_right_directory:
         break
     else:
         print("Canceld")
@@ -23,51 +24,34 @@ Are you sure this is the right directory (y/n)?""")
 
 # 正規表現のパターンを入力してください
 while True:
+    # ファイル名パターンの入力
     pattern = input_file_name_pattern(files)
 
-    print("""
-Was there a match (y/n)?""")
+    # パターンに一致したファイル名の一覧
+    list_name_matched_files(files, pattern)
 
-    answer = input()
+    # マッチしましたか？
+    is_match = input_was_there_match()
 
-    if answer == "y":
+    if is_match:
         break
     else:
         print("Canceld")
 
 # 挿入する型を入力してください
-print(r"""
-Enter the insertion parameter type.
-Example: file-modified-day""")
-
-typeStr = input()
-
-print(f"""
-Parameter type
---------------
-{typeStr}""")
+typeStr = input_type_str()
 
 # 文字列フォーマットを入力してください
-print("""
-Enter the string format.
-Example: {0}{2}{1}""")
-
-formatStr = input()
-
-print(f"""
-Format string
--------------
-{formatStr}""")
+formatStr = input_string_format()
 
 # 置換のシミュレーション
 simulate_replace(files, pattern, typeStr, formatStr)
 
-print("""
-Do you want to run it (y/n)?""")
 
-answer = input()
+# 実行しますか？ (y/n)
+is_yes = input_do_you_want_to_run_it()
 
-if answer == "y":
+if is_yes:
     pass
 else:
     print("Canceld")

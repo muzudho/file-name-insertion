@@ -3,6 +3,38 @@ import sys
 from datetime import datetime
 
 
+def input_type_str():
+    # 挿入する型を入力してください
+    print("""
+    Enter the insertion parameter type.
+    Example: file-modified-day""")
+
+    typeStr = input()
+
+    print(f"""
+    Parameter type
+    --------------
+    {typeStr}""")
+
+    return typeStr
+
+
+def input_string_format():
+    """文字列フォーマットを入力してください"""
+    print("""
+    Enter the string format.
+    Example: {0}{2}{1}""")
+
+    formatStr = input()
+
+    print(f"""
+    Format string
+    -------------
+    {formatStr}""")
+
+    return formatStr
+
+
 def get_center(typeStr, file):
     if typeStr == "file-creation-year":
         tick = os.path.getctime(file)
@@ -92,3 +124,32 @@ def replace_file_names(files, pattern, typeStr, formatStr):
             newPath = os.path.join(os.getcwd(), replaced)
             print(f"({i})Rename {oldPath} --> {newPath}")
             os.rename(oldPath, newPath)
+
+
+def input_was_there_match():
+    """マッチしましたか？"""
+    print("""
+Was there a match (y/n)?""")
+
+    answer = input()
+
+    return answer == "y"
+
+
+def input_do_you_want_to_run_it():
+    print("""
+    Do you want to run it (y/n)?""")
+
+    answer = input()
+
+    return answer == "y"
+
+
+def input_is_right_directory():
+    """このディレクトリーで合っていますか？"""
+    print("""
+Are you sure this is the right directory (y/n)?""")
+
+    answer = input()
+
+    return answer == "y"
