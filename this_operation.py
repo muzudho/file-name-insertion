@@ -5,47 +5,34 @@ from datetime import datetime
 
 def input_re_pattern(prompt_message):
     """ファイル名パターンの入力"""
-    print(prompt_message)
+    patternText = input(prompt_message)
 
-    patternText = input()
-
-    pattern = re.compile(patternText)
-
-    print(r"""
-Numbering
----------""")
-
-    return pattern
+    return re.compile(patternText)
 
 
 def input_type_str():
     # 挿入する型を入力してください
-    print("""
-    Enter the insertion parameter type.
-    Example: file-modified-day""")
-
-    typeStr = input()
+    typeStr = input("""
+Enter the insertion parameter type.
+Example: file-modified-day
+""")
 
     print(f"""
-    Parameter type
-    --------------
-    {typeStr}""")
+Parameter type
+--------------
+{typeStr}""")
 
     return typeStr
 
 
-def input_string_format():
+def input_string_format(prompt_message):
     """文字列フォーマットを入力してください"""
-    print("""
-    Enter the string format.
-    Example: {0}{2}{1}""")
-
-    formatStr = input()
+    formatStr = input(prompt_message)
 
     print(f"""
-    Format string
-    -------------
-    {formatStr}""")
+Format string
+-------------
+{formatStr}""")
 
     return formatStr
 
@@ -85,8 +72,8 @@ def get_center(typeStr, file):
 def simulate_replace(files, pattern, typeStr, formatStr):
     """置換のシミュレーション"""
     print("""
-    Simulation
-    ----------""")
+Simulation
+----------""")
 
     countOfSimulation = 0
 
@@ -120,8 +107,8 @@ def simulate_replace(files, pattern, typeStr, formatStr):
 def replace_file_names(files, pattern, typeStr, formatStr):
     """置換実行"""
     print("""
-    Result
-    ------""")
+Result
+------""")
 
     # 置換実行
     for i, file in enumerate(files):
@@ -142,8 +129,5 @@ def replace_file_names(files, pattern, typeStr, formatStr):
 
 
 def input_y(prompt_message):
-    print(prompt_message)
-
-    answer = input()
-
-    return answer == "y"
+    """はい？"""
+    return input(prompt_message).upper == "Y"
