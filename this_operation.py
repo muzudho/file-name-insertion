@@ -3,11 +3,9 @@ import re
 from datetime import datetime
 
 
-def input_file_name_pattern():
+def input_re_pattern(prompt_message):
     """ファイル名パターンの入力"""
-    print(r"""
-Please enter a regular expression pattern. Left and Rignt groups. Insert to center.
-Example: ^(example-)(?:.*)(-banana.txt)$""")
+    print(prompt_message)
 
     patternText = input()
 
@@ -143,9 +141,8 @@ def replace_file_names(files, pattern, typeStr, formatStr):
             os.rename(oldPath, newPath)
 
 
-def input_do_you_want_to_run_it():
-    print("""
-    Do you want to run it (y/n)?""")
+def input_y(prompt_message):
+    print(prompt_message)
 
     answer = input()
 

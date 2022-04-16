@@ -1,9 +1,8 @@
 import sys
-from fs_operation import input_directory, input_is_right_directory, input_was_there_match, \
+from fs_operation import input_directory, input_is_right_directory, input_y, \
     list_name_matched_files
-from this_operation import input_file_name_pattern, simulate_replace, replace_file_names, \
-    input_type_str, input_string_format, \
-    input_do_you_want_to_run_it
+from this_operation import input_re_pattern, simulate_replace, replace_file_names, \
+    input_type_str, input_string_format, input_y
 
 # 日本のWindows は "cp932" なので、Unicodeに変換
 sys.stdout.reconfigure(encoding='utf-8')
@@ -26,13 +25,16 @@ while True:
 # 正規表現のパターンを入力してください
 while True:
     # ファイル名パターンの入力
-    pattern = input_file_name_pattern()
+    pattern = input_re_pattern(r"""
+Please enter a regular expression pattern. Left and Rignt groups. Insert to center.
+Example: ^(example-)(?:.*)(-banana.txt)$""")
 
     # パターンに一致したファイル名の一覧
     list_name_matched_files(files, pattern)
 
     # マッチしましたか？
-    is_match = input_was_there_match()
+    is_match = input_y("""
+Was there a match (y/n)?""")
 
     if is_match:
         break
@@ -50,7 +52,8 @@ while True:
     simulate_replace(files, pattern, typeStr, formatStr)
 
     # 実行しますか？ (y/n)
-    is_yes = input_do_you_want_to_run_it()
+    is_yes = input_y("""
+Do you want to run it (y/n)?""")
 
     if is_yes:
         break

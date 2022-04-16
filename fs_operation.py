@@ -59,10 +59,9 @@ def list_name_matched_files(files, pattern):
             print(f"( ) {basename}")
 
 
-def input_was_there_match():
-    """マッチしましたか？"""
-    print("""
-Was there a match (y/n)?""")
+def input_y(prompt_message):
+    """はい？"""
+    print(prompt_message)
 
     answer = input()
 
