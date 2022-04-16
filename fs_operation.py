@@ -3,8 +3,6 @@
 import os
 import glob
 import re
-import sys
-from datetime import datetime
 
 
 def input_directory():
@@ -33,21 +31,14 @@ Files
     return files
 
 
-def input_file_name_pattern(files):
-    """ファイル名パターンの入力"""
-    print(r"""
-Please enter a regular expression pattern. Left and Rignt groups. Insert to center.
-Example: ^(example-)(?:.*)(-banana.txt)$""")
+def input_is_right_directory():
+    """このディレクトリーで合っていますか？"""
+    print("""
+Are you sure this is the right directory (y/n)?""")
 
-    patternText = input()
+    answer = input()
 
-    pattern = re.compile(patternText)
-
-    print(r"""
-Numbering
----------""")
-
-    return pattern
+    return answer == "y"
 
 
 def list_name_matched_files(files, pattern):
@@ -66,3 +57,13 @@ def list_name_matched_files(files, pattern):
         else:
             # Unmatched
             print(f"( ) {basename}")
+
+
+def input_was_there_match():
+    """マッチしましたか？"""
+    print("""
+Was there a match (y/n)?""")
+
+    answer = input()
+
+    return answer == "y"

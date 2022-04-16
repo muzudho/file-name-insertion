@@ -1,6 +1,23 @@
 import os
-import sys
+import re
 from datetime import datetime
+
+
+def input_file_name_pattern():
+    """ファイル名パターンの入力"""
+    print(r"""
+Please enter a regular expression pattern. Left and Rignt groups. Insert to center.
+Example: ^(example-)(?:.*)(-banana.txt)$""")
+
+    patternText = input()
+
+    pattern = re.compile(patternText)
+
+    print(r"""
+Numbering
+---------""")
+
+    return pattern
 
 
 def input_type_str():
@@ -126,29 +143,9 @@ def replace_file_names(files, pattern, typeStr, formatStr):
             os.rename(oldPath, newPath)
 
 
-def input_was_there_match():
-    """マッチしましたか？"""
-    print("""
-Was there a match (y/n)?""")
-
-    answer = input()
-
-    return answer == "y"
-
-
 def input_do_you_want_to_run_it():
     print("""
     Do you want to run it (y/n)?""")
-
-    answer = input()
-
-    return answer == "y"
-
-
-def input_is_right_directory():
-    """このディレクトリーで合っていますか？"""
-    print("""
-Are you sure this is the right directory (y/n)?""")
 
     answer = input()
 
