@@ -10,12 +10,9 @@ def input_re_pattern(prompt_message):
     return re.compile(patternText)
 
 
-def input_type_str():
+def input_type_str(prompt_message):
     # 挿入する型を入力してください
-    typeStr = input("""
-Enter the insertion parameter type.
-Example: file-modified-day
-""")
+    typeStr = input(prompt_message)
 
     print(f"""
 Parameter type
@@ -101,7 +98,7 @@ Simulation
             pass
 
     print(f"""
-    Count of simulation = {countOfSimulation}""")
+Count of simulation = {countOfSimulation}""")
 
 
 def replace_file_names(files, pattern, typeStr, formatStr):

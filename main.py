@@ -56,7 +56,10 @@ Was there a match (y/n)?
 
 while True:
     # 挿入する型を入力してください
-    typeStr = input_type_str()
+    typeStr = input_type_str("""
+Enter the insertion parameter type.
+Example: file-modified-day
+""")
 
     # 文字列フォーマットを入力してください
     formatStr = input_string_format("""
